@@ -11,9 +11,6 @@ trait MakesHttpRequests
     /** @var bool */
     private $followRedirects = false;
 
-    /** @var bool */
-    private $requestIsAjax = false;
-
     /** @var array */
     private $headers = [];
 
