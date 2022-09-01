@@ -1,8 +1,8 @@
 <?php
 
-namespace Drupal\Tests\http_testing\Traits;
+namespace Drupal\Tests\drupal_http_testing\Traits;
 
-use Drupal\Tests\http_testing\Traits\Response\TestResponse;
+use Drupal\Tests\drupal_test_support\Traits\Http\Response\TestResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,6 +13,9 @@ trait MakesHttpRequests
 
     /** @var array */
     private $headers = [];
+
+    /** @var array */
+    private $fakes = [];
 
     public function get(string $uri, array $headers = []): TestResponse
     {
@@ -114,6 +117,10 @@ trait MakesHttpRequests
     /** @return mixed */
     public function call(string $method, string $uri, $parameters = [], $cookies = [], $files = [], $server = [], $content = null): TestResponse
     {
+        if (isset($this->fakes[$uri])) {
+            return TestResponse::fromBaseResponse($this->fakes[$uri]);
+        }
+
         $request = Request::create($uri, $method, $parameters, $cookies, $files, $server, $content);
 
         $request->setSession($this->container->get('session'));
@@ -153,8 +160,28 @@ trait MakesHttpRequests
 
     public function from(string $url): self
     {
+        return $this->withHeader('referer', $url);
+    }
+
+    public function fakeResponse(string $url, $response): self
+    {
+        $this->fakes[$url] = $response;
+
+        return $this;
+    }
+
+    protected function withHeaders(array $headers)
+    {
+        $this->headers = array_merge($this->headers, $headers);
+
+        return $this;
+    }
+
+    /** @param mixed $value */
+    protected function withHeader(string $header, $value): self
+    {
         $this->headers = array_merge($this->headers, [
-            'referer' => $url,
+            $header => $value,
         ]);
 
         return $this;
