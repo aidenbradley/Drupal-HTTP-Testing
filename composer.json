@@ -1,5 +1,5 @@
 {
-    "name": "aidenbradley/drupal-http-testing",
+    "name": "aidenbradley/drupal-test-http",
     "description": "Provides an API surface to test HTTP request / response flow",
     "type": "library",
     "require": {

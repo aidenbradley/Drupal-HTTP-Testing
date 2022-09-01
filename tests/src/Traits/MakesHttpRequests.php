@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\drupal_http_testing\Traits;
+namespace Drupal\Tests\drupal_test_http\Traits;
 
 use Drupal\Tests\drupal_test_support\Traits\Http\Response\TestResponse;
 use Symfony\Component\HttpFoundation\Request;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\drupal_http_testing\Kernel;
+namespace Drupal\Tests\drupal_test_http\Kernel;
 
 use Drupal\Core\Url;
 use Drupal\KernelTests\KernelTestBase;
